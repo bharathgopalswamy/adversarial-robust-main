@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plotly Graph</title>
+  <!-- Include Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<!-- Placeholder for the plot -->
+<div id="plot"></div>
+
+<script>
+// Sample data for attacks and robustness percent
+var attacks = ['FGSM', 'PGD', 'BIM', 'RANN', 'GN', 'APGD', 'DEF', 'SPAR', 'DIFGSM', 'TIFGSM', 'NIFGSM', 'SINI', 'VMI', 'SPSA', 'EADEN'];
+var robustnessPercent = [0.9566,0.9582,0.9592,0.9462,0.9582,0.9452,0.9572,0.9442,0.9692,0.9695,0.9432,0.9452,0.9572,0.9692,0.9424];
+var beforeAdvTraining = [0.9566,0.9582,0.9592,0.9462,0.9582,0.9452,0.9572,0.9442,0.9692,0.9695,0.9432,0.9452,0.9572,0.9692,0.9424];
+var afterAdvTraining = [0.9866,0.9899,0.9900,0.9817,0.9820,0.99,0.9789,0.966,0.9799,0.9884,0.9782,0.9871,0.9888,0.9718,0.9885];
+
+// Create traces for the plot
+var traceRobustness = {
+  x: attacks, // X-axis data (Attacks)
+  y: robustnessPercent, // Y-axis data (Robustness Percent)
+  type: 'bar', // Type of the plot (bar chart)
+  name: 'Robustness Percent' // Name of the trace
+};
+
+var traceBeforeAdvTraining = {
+  x: attacks, // X-axis data (Attacks)
+  y: beforeAdvTraining, // Y-axis data (Robustness Percent before Adv Training)
+  type: 'scatter', // Type of the plot (line chart)
+  mode: 'lines',
+  name: 'Before Adv Training' // Name of the trace
+};
+
+var traceAfterAdvTraining = {
+  x: attacks, // X-axis data (Attacks)
+  y: afterAdvTraining, // Y-axis data (Robustness Percent after Adv Training)
+  type: 'scatter', // Type of the plot (line chart)
+  mode: 'lines',
+  name: 'After Adv Training' // Name of the trace
+};
+
+// Define the layout of the plot
+var layout = {
+  title: 'Robustness Percent vs. Attacks', // Title of the plot
+  xaxis: {
+    title: 'Attacks' // X-axis label
+  },
+  yaxis: {
+    title: 'Robustness Percent' // Y-axis label
+  }
+};
+
+// Combine the traces and layout to form the plot configuration
+var data = [traceRobustness, traceBeforeAdvTraining, traceAfterAdvTraining];
+
+// Plot the graph in the 'plot' div
+Plotly.newPlot('plot', data, layout);
+</script>
+
+</body>
+</html>
